@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Caddy Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .output {
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg w-96 p-8">
+      <h1 class="text-2xl font-semibold mb-4">Caddy Management</h1>
+      
+      <% if (message.length > 0) { %>
+        <div class="bg-red-100 text-red-800 p-2 mb-4 rounded">
+          <%= message %>
+        </div>
+      <% } %>
+      
+      <form method="post" action="/action">
+        <label class="block mb-2">
+          Select Action:
+          <select class="block w-full mt-1 p-2 border rounded" name="action">
+            <option value="cat /etc/caddy/Caddyfile">View Caddyfile</option>
+            <option value="systemctl stop caddy">Stop Caddy</option>
+            <option value="caddy run --config /etc/caddy/Caddyfile">Run Caddy</option>
+            <option value="caddy run --resume --config /etc/caddy/Caddyfile">Run Caddy with --resume flag</option>
+            <option value="systemctl status caddy">Check Caddy Status</option>
+          </select>
+        </label>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded" type="submit">Execute Action</button>
+      </form>
+      
+      <div class="mt-4">
+        <% if (output.length > 0) { %>
+          <h2 class="text-lg font-semibold mb-2">Command Output:</h2>
+          <pre class="output p-2 bg-gray-200 rounded">
+            <%= output %>
+          </pre>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
